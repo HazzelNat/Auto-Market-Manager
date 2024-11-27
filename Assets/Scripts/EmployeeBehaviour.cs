@@ -22,10 +22,10 @@ public class EmployeeBehaviour : MonoBehaviour
     [Header("Pathfinding and Moving")]
     Pathfinding.Path path;
     int currentWaypoint = 0;
-    bool reachTarget = false;
+    public bool reachTarget = false;
     Seeker seeker;
     public float speed;
-    [SerializeField] public float nextWaypointDistance = 2f;
+    [SerializeField] public float nextWaypointDistance = .1f;
 
     [Header("Other Employee")]
     List<GameObject> otherEmployee = new List<GameObject>();
@@ -41,9 +41,9 @@ public class EmployeeBehaviour : MonoBehaviour
     private void Start(){
         state = State.Idle;
         seeker = GetComponent<Seeker>();
-        GameObject employeeList = GameObject.Find("EmployeeList");
+        // GameObject employeeList = GameObject.Find("EmployeeList");
 
-        for(int i=0 ; i<emp)
+        // for(int i=0 ; i<emp)
     }
 
     private void Update(){
@@ -52,6 +52,7 @@ public class EmployeeBehaviour : MonoBehaviour
         MouseRaycast();
 
         Movement(state);
+        Debug.Log(target.position);
     }
 
     void MouseRaycast(){
@@ -88,6 +89,7 @@ public class EmployeeBehaviour : MonoBehaviour
                     } else if(!isHovered){
                         if(targetPosition != transform.position){
                             target.position = targetPosition;
+                            
                             seeker.StartPath(transform.position, target.position, OnCompletePath);
 
                             ChangeState(State.Moving);                              // Selected -> Moving (if nothing blocked)
@@ -107,19 +109,27 @@ public class EmployeeBehaviour : MonoBehaviour
                 }
 
                 if(currentWaypoint >= path.vectorPath.Count - 1){
-                    reachTarget = true;
+                    if(target.position != transform.position){
+                        transform.position = Vector3.MoveTowards(transform.position, target.position, speed);
+                        reachTarget = false;
+                        Debug.Log("HM");
+                    } else {
+                        reachTarget = true;
+                        Debug.Log("HMM");
+                    }
+                    
                 } else {
                     reachTarget = false;
+
+                    transform.position = Vector3.MoveTowards(transform.position, path.vectorPath[currentWaypoint], speed);
+
+                    float distance = Vector2.Distance(transform.position, path.vectorPath[currentWaypoint]);
+
+                    if(distance < nextWaypointDistance){
+                        currentWaypoint++;
+                    }
                 }
-
-                transform.position = Vector3.MoveTowards(transform.position, path.vectorPath[currentWaypoint], speed);
-
-                float distance = Vector2.Distance(transform.position, path.vectorPath[currentWaypoint]);
-
-                if(distance < nextWaypointDistance){
-                    currentWaypoint++;
-                }
-
+                
                 if(reachTarget){
                     ChangeState(State.DoingTask);                                   // Moving -> Doing Task (Reach target)
                 }
