@@ -10,6 +10,13 @@ MonoImporter:
   - rice_S: {fileID: 21300000, guid: c37bf5034193ae44398af8e1ef1003d8, type: 3}
   - snacks_S: {fileID: 21300000, guid: 0970521cbda9c8146b1d611a9875210f, type: 3}
   - instant_Noodles_S: {fileID: 21300000, guid: 1eac2544ffc80c948bb1dfe062cf41d8, type: 3}
+  - defaultWorldItemSprite: {fileID: -1091487781, guid: c89e1d004ea8455439ac2a96ad5384b4, type: 3}
+  - worldEggSprite: {fileID: -1745922538, guid: c89e1d004ea8455439ac2a96ad5384b4, type: 3}
+  - worldBottledWaterSprite: {fileID: -1745922538, guid: c89e1d004ea8455439ac2a96ad5384b4, type: 3}
+  - worldBreadSprite: {fileID: -1745922538, guid: c89e1d004ea8455439ac2a96ad5384b4, type: 3}
+  - worldRiceSprite: {fileID: -1091487781, guid: c89e1d004ea8455439ac2a96ad5384b4, type: 3}
+  - worldSnacksSprite: {fileID: -1091487781, guid: c89e1d004ea8455439ac2a96ad5384b4, type: 3}
+  - worldInstantNoodlesSprite: {fileID: -1091487781, guid: c89e1d004ea8455439ac2a96ad5384b4, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

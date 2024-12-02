@@ -14,6 +14,12 @@ public class PlayerMoney : MonoBehaviour
         UpdateMoneyDisplay();
     }
 
+    // New method to safely access current money
+    public int GetCurrentMoney()
+    {
+        return currentMoney;
+    }
+
     public bool CanAfford(int amount)
     {
         return currentMoney >= amount;

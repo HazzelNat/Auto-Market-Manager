@@ -95,7 +95,7 @@ public class InventoryListUI : MonoBehaviour
 
     private void ReorganizeInventoryDisplay()
     {
-        float inventoryItemHeight = 100f;
+        float inventoryItemHeight = 120f;
         int index = 0;
         foreach (var itemObject in inventoryItemObjects.Values)
         {

@@ -8,44 +8,47 @@ public class ShopItemButton : MonoBehaviour
     private Button button;
     private PlayerMoney playerMoney;
     private InventoryManager inventoryManager;
+    
+    // private CurrentMoney currentMoney;
 
     [SerializeField] private GameObject insufficientFundsPanel;
     [SerializeField] private TextMeshProUGUI insufficientFundsText;
 
     private void Awake()
     {
-        // Get the Button component attached to this GameObject
         button = GetComponent<Button>();
-        
-        // If no Button component exists, add one
         if (button == null)
         {
             button = gameObject.AddComponent<Button>();
         }
 
-        // Find the PlayerMoney and InventoryManager components in the scene
         playerMoney = FindObjectOfType<PlayerMoney>();
-        inventoryManager = FindObjectOfType<InventoryManager>();
+        if (playerMoney == null)
+        {
+            Debug.LogError("PlayerMoney component not found in the scene!");
+        }
 
-        // Find or create the insufficient funds panel if not assigned
+        inventoryManager = FindObjectOfType<InventoryManager>();
+        if (inventoryManager == null)
+        {
+            Debug.LogError("InventoryManager component not found in the scene!");
+        }
+
         if (insufficientFundsPanel == null)
         {
             insufficientFundsPanel = GameObject.Find("InsufficientFundsPanel");
         }
 
-        // Find the text component for insufficient funds message
         if (insufficientFundsText == null && insufficientFundsPanel != null)
         {
             insufficientFundsText = insufficientFundsPanel.GetComponentInChildren<TextMeshProUGUI>();
         }
 
-        // Ensure the insufficient funds panel is initially hidden
         if (insufficientFundsPanel != null)
         {
             insufficientFundsPanel.SetActive(false);
         }
 
-        // Add click listener
         button.onClick.AddListener(OnItemButtonClicked);
     }
 
@@ -56,33 +59,32 @@ public class ShopItemButton : MonoBehaviour
 
     private void OnItemButtonClicked()
     {
-        // Get the cost of the item
+        Debug.Log($"Attempting to purchase {itemType}...");
         int itemCost = Item.GetCost(itemType);
 
-        // Check if player can afford the item
         if (playerMoney != null && playerMoney.CanAfford(itemCost))
         {
-            // Spend money
             if (playerMoney.SpendMoney(itemCost))
             {
-                // Try to add item to inventory
+                Debug.Log($"Spent ${itemCost} for {itemType}.");
+
                 if (inventoryManager.AddItem(itemType))
                 {
-                    Debug.Log($"Purchased {itemType} for ${itemCost}");
+                    Debug.Log($"Successfully added {itemType} to inventory.");
                     HideInsufficientFundsMessage();
                 }
                 else
                 {
-                    // Inventory is full
-                    ShowInsufficientFundsMessage($"Inventory is full! Cannot add {itemType}.");
-                    // Refund the money since inventory addition failed
+                    ShowInsufficientFundsMessage($"Inventory full! Cannot add {itemType}.");
+                    Debug.LogWarning($"Inventory full: Refund ${itemCost} for {itemType}.");
                     playerMoney.AddMoney(itemCost);
                 }
             }
         }
         else
         {
-            ShowInsufficientFundsMessage($"Not enough money to purchase {itemType}!");
+            // Debug.LogWarning($"Not enough money to purchase {itemType}. Cost: ${itemCost}, Available: ${playerMoney.currentMoney}");
+            // ShowInsufficientFundsMessage($"Not enough money to purchase {itemType}!");
         }
     }
 
@@ -92,9 +94,11 @@ public class ShopItemButton : MonoBehaviour
         {
             insufficientFundsText.text = message;
             insufficientFundsPanel.SetActive(true);
-
-            // Optional: Auto-hide the message after a few seconds
             Invoke("HideInsufficientFundsMessage", 3f);
+        }
+        else
+        {
+            Debug.LogWarning("Insufficient funds panel or text is not set!");
         }
     }
 

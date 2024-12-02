@@ -52,7 +52,7 @@ public class EmployeeBehaviour : MonoBehaviour
         MouseRaycast();
 
         Movement(state);
-        Debug.Log(target.position);
+        //Debug.Log(target.position);
     }
 
     void MouseRaycast(){

@@ -49,4 +49,10 @@ public static int CustomerCost(ItemType itemtype){
             case ItemType.Instant_Noodles:      return GameAssetsHandler.instance.Instant_Noodles_S;
         }
     }
+
+    public static Sprite GetWorldSprite(ItemType itemtype)
+    {
+        return GameAssetsHandler.instance.GetWorldItemSprite(itemtype);
+    }
+    
 }
