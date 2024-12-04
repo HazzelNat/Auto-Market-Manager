@@ -60,7 +60,7 @@ public class Player_Shop : MonoBehaviour
         Transform shopItemTransform = Instantiate(shopItemTemplate, container);
         RectTransform shopItemRectTransform = shopItemTransform.GetComponent<RectTransform>();
 
-        float shopItemHeight = 175f;
+        float shopItemHeight = 145f;
         shopItemRectTransform.anchoredPosition = new Vector2(0, -shopItemHeight * posIndex);
 
         shopItemTransform.Find("itemName").GetComponent<TextMeshProUGUI>().SetText(itemName);

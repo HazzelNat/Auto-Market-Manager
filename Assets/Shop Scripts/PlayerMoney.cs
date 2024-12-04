@@ -3,10 +3,10 @@ using TMPro;
 
 public class PlayerMoney : MonoBehaviour
 {
-    [SerializeField] private int startingMoney = 100;
+    [SerializeField] private float startingMoney = 1000;
     [SerializeField] private TextMeshProUGUI moneyText; // Reference to UI 
     
-    private int currentMoney;
+    private float currentMoney;
 
     private void Start()
     {
@@ -38,7 +38,7 @@ public class PlayerMoney : MonoBehaviour
     {
         if (moneyText != null)
         {
-            moneyText.text = $"Current Balance: ${currentMoney}";
+            moneyText.text = $"${currentMoney}";
         }
     }
 }
