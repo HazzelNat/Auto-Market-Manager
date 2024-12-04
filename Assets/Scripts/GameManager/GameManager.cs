@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    Item item;
     GameAssetsHandler gameAssetsHandler;
 
     private void Start() {

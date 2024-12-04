@@ -7,6 +7,8 @@ public class FollowTarget : MonoBehaviour
     public bool isFollowing;
     public bool onFloor;
     private GameObject target;
+    [SerializeField] private CanvasGroup canvasGroup;
+    
     void Start()
     {
         onFloor = true;
@@ -16,7 +18,6 @@ public class FollowTarget : MonoBehaviour
     {
         if(isFollowing){
             if(onFloor){
-                // Vector3 vector3 = gameObject.transform.GetChild(0).transform.position;
                 transform.GetChild(0).transform.position = new Vector3(gameObject.transform.GetChild(0).transform.position.x, gameObject.transform.GetChild(0).transform.position.y + 0.7f);
                 onFloor = false;
             }
@@ -28,6 +29,7 @@ public class FollowTarget : MonoBehaviour
     public void Follow(GameObject gameObject)
     {   
         isFollowing = true;
+        canvasGroup.alpha = 1;
         target = gameObject;
     }
 

@@ -94,7 +94,7 @@ public class CustomerBehaviour : MonoBehaviour
 
                 if(currentWaypoint >= path.vectorPath.Count - 1){
                     if(currentTarget != transform.position){
-                        transform.position = Vector3.MoveTowards(transform.position, currentTarget, speed);
+                        transform.position = Vector3.MoveTowards(transform.position, currentTarget, speed * Time.deltaTime);
                         reachTarget = false;
                     } else {
                         reachTarget = true;
@@ -118,13 +118,11 @@ public class CustomerBehaviour : MonoBehaviour
                 break;
 
             case State.DoingTask:
-                // DoingTask(tileName);
+                DoingTask();
 
-                // if(completeTask){
-                //     ChangeState(State.Thinking);                                            // Doing Task -> Idle (after task)
-                // }
-
-                ChangeState(State.Thinking); 
+                if(completeTask){
+                    ChangeState(State.Thinking);                                            // Doing Task -> Idle (after task)
+                }
                 
                 break;
         }
@@ -144,6 +142,8 @@ public class CustomerBehaviour : MonoBehaviour
 
     private void DoingTask()
     {
-        
+        if(tileName == "Shelf"){
+            
+        }
     }
 }

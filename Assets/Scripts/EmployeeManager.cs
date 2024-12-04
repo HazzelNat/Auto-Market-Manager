@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class EmployeeManager : MonoBehaviour
 {
-    // [SerializeField] private int employeeCount = 2;
     // public GameObject[] employees;
     // private EmployeeBehaviour[] employeeScript;
+    // public GameObject selectedEmployee;
     void Start()
     {
         // employees = GameObject.FindGameObjectsWithTag("Player");
@@ -19,7 +19,7 @@ public class EmployeeManager : MonoBehaviour
     private void Update() {
         // for(int i=0 ; i<employees.Count() ; i++){
         //     if(employeeScript[i].state == EmployeeBehaviour.State.Selected){
-                
+        //         selectedEmployee = employees[i];
         //     }
         // }
     }

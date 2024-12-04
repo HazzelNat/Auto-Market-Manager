@@ -237,6 +237,7 @@ GameObject:
   - component: {fileID: 5841729587181514944}
   - component: {fileID: 4833453927789436931}
   - component: {fileID: 6200358940960235617}
+  - component: {fileID: 6858419369000822332}
   m_Layer: 0
   m_Name: Customer
   m_TagString: Player
@@ -334,3 +335,38 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &6858419369000822332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8224553553410623902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6eb1351803a7a74458043a6944a40546, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: 0
+  tilemap:
+  - {fileID: 0}
+  - {fileID: 0}
+  customerSpawn: {fileID: 0}
+  customerTargets:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  customerCashiers:
+  - {fileID: 0}
+  - {fileID: 0}
+  targetPosition: {x: 0, y: 0, z: 0}
+  reachTarget: 0
+  speed: 3
+  nextWaypointDistance: 0.1

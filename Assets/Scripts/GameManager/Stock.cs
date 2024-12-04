@@ -22,7 +22,6 @@ public class Stock : MonoBehaviour
         
     }
 
-    // Update is called once per frame
     void Update()
     {
 
@@ -31,6 +30,11 @@ public class Stock : MonoBehaviour
     public bool CheckItem(GameObject box)
     {
         boxData = box.GetComponent<BoxData>();
+
+        if(itemName == boxData.itemName){
+            AddItem(box);
+            return true;
+        }
 
         if(boxData != null && stockNumber == 0){
             AddItem(box);
@@ -47,16 +51,33 @@ public class Stock : MonoBehaviour
         itemName = boxData.itemName;
         itemSprite = boxData.itemSprite;
         cost = boxData.cost;
-        stockNumber = boxData.stockNumber;
+        stockNumber += boxData.stockNumber;
 
-        UpdateUI();
+        UpdateUIOn();
     }
 
-    private void UpdateUI()
+    private void UpdateUIOn()
     {
         canvasGroup = (gameObject.transform.GetChild(0).gameObject).GetComponent<CanvasGroup>();
         canvasGroup.alpha = 1;
         itemStock.text = stockNumber.ToString();
         image.sprite = itemSprite;
+    }
+
+    public void DecreaseStock()
+    {
+        stockNumber -= 1;
+
+        CheckForStock();
+    }
+
+    private void CheckForStock()
+    {
+        if(stockNumber == 0){
+            canvasGroup = gameObject.transform.GetChild(0).gameObject.GetComponent<CanvasGroup>();
+            canvasGroup.alpha = 0;
+            itemStock.text = null;
+            image.sprite = null;
+        }
     }
 }
