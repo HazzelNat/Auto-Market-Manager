@@ -1,18 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using UnityEngine;
 
 public class Cashier : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private GameObject customerSide;
+    [SerializeField] private GameObject employeeSide;
+
+    private void Update() {
+        
+    }
+
+    public void CheckSides()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Transaction()
     {
-        
+
     }
 }

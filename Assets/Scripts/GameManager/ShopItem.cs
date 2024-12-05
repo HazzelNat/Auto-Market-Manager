@@ -33,7 +33,6 @@ public class ShopItem : MonoBehaviour
 
             instance.GetComponent<BoxData>().itemName = itemName;
             instance.GetComponent<BoxData>().itemSprite = itemImage;
-            instance.GetComponent<BoxData>().cost = (itemPrice / 10) + 0.5f;
             instance.GetComponent<BoxData>().stockNumber = 10;
         }
 

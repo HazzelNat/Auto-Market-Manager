@@ -14,21 +14,21 @@ public class EmployeeBehaviour : MonoBehaviour
 {
     bool isHovered;
 
-    public Collider2D collider2d;
-    public Transform target;
+    private Collider2D collider2d;
+    [SerializeField] private Transform target;
     public State state;
-    public Vector3 targetPosition;
-    public Vector3 mousePosition;
-    public GameObject arrowSelect;
-    public Tilemap[] tilemap;
+    private Vector3 targetPosition;
+    private Vector3 mousePosition;
+    [SerializeField] private GameObject arrowSelect;
+    [SerializeField] private Tilemap[] tilemap;
     private bool completeTask;
 
     [Header("Pathfinding and Moving")]
     Pathfinding.Path path;
-    int currentWaypoint = 0;
-    public bool reachTarget = false;
+    private int currentWaypoint = 0;
+    private bool reachTarget = false;
     Seeker seeker;
-    public float speed;
+    private float speed;
     public float normalSpeed;
     public float slowSpeed;
     private string tileName;
@@ -42,7 +42,7 @@ public class EmployeeBehaviour : MonoBehaviour
     private GameObject currentLocation;
 
     [Header("Tasks")]
-    public GameObject box;
+    private GameObject box;
     private bool emptyHanded;
     FollowTarget followTarget;
     private bool stillDoingTask;
@@ -170,7 +170,6 @@ public class EmployeeBehaviour : MonoBehaviour
 
             case State.DoingTask:
                 DoingTask(tileName);
-
 
                 if(completeTask){
                     ChangeState(State.Idle);                                            // Doing Task -> Idle (after task)

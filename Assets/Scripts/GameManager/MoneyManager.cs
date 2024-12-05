@@ -5,26 +5,26 @@ using UnityEngine;
 
 public class MoneyManager : MonoBehaviour
 {
-    private int money = 1000;
+    private float money = 1000;
     [SerializeField] private TextMeshProUGUI moneyText;
 
     private void Start() {
         UpdateMoney();
     }
 
-    public void SpentMoney(int amount)
+    public void SpentMoney(float amount)
     {
         money -= amount;
         UpdateMoney();
     }
 
-    public void ProfitMoney(int amount)
+    public void ProfitMoney(float amount)
     {
         money += amount;
         UpdateMoney();
     }
 
-    public int CheckMoney()
+    public float CheckMoney()
     {
         return money;
     }
