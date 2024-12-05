@@ -19,6 +19,7 @@ public class FollowTarget : MonoBehaviour
         if(isFollowing){
             if(onFloor){
                 transform.GetChild(0).transform.position = new Vector3(gameObject.transform.GetChild(0).transform.position.x, gameObject.transform.GetChild(0).transform.position.y + 0.7f);
+                transform.GetChild(1).transform.position = new Vector3(gameObject.transform.GetChild(1).transform.position.x, gameObject.transform.GetChild(1).transform.position.y + 0.7f);
                 onFloor = false;
             }
 

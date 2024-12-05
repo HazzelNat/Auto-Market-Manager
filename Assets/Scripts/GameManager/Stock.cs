@@ -11,11 +11,11 @@ public class Stock : MonoBehaviour
 
     [SerializeField] Image image;
     [SerializeField] TextMeshProUGUI itemStock;
+    [SerializeField] int maxStock;
     CanvasGroup canvasGroup;
 
     public string itemName;
     public Sprite itemSprite;
-    public float cost;
     public int stockNumber;
     void Start()
     {
@@ -27,21 +27,24 @@ public class Stock : MonoBehaviour
 
     }
 
-    public bool CheckItem(GameObject box)
+    public bool CheckItem(GameObject newBox)
     {
+        box = newBox;
         boxData = box.GetComponent<BoxData>();
 
-        if(itemName == boxData.itemName){
-            AddItem(box);
-            return true;
+        if(boxData.itemName == gameObject.name){
+            if(maxStock - stockNumber <= maxStock){
+                AddItem(box);
+                return true;
+            } else {
+                boxData.CantPutThere("Full!");
+            }
+           
+        } else {
+            boxData.CantPutThere("Wrong item to put");
         }
 
-        if(boxData != null && stockNumber == 0){
-            AddItem(box);
-            return true;
-        } else {
-            return false;
-        }
+        return false;
     }
 
     public void AddItem(GameObject box)
@@ -50,7 +53,6 @@ public class Stock : MonoBehaviour
 
         itemName = boxData.itemName;
         itemSprite = boxData.itemSprite;
-        cost = boxData.cost;
         stockNumber += boxData.stockNumber;
 
         UpdateUIOn();
@@ -64,11 +66,19 @@ public class Stock : MonoBehaviour
         image.sprite = itemSprite;
     }
 
-    public void DecreaseStock()
+    public bool DecreaseStock()
     {
-        stockNumber -= 1;
+        if(stockNumber > 0){
+            stockNumber -= 1;
+            UpdateUIOn();
+            CheckForStock();
+            return true;
+        }
 
+        UpdateUIOn();
         CheckForStock();
+
+        return false;
     }
 
     private void CheckForStock()

@@ -4,15 +4,22 @@ using UnityEngine;
 
 public class CustomerSpawner : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    [SerializeField] float cooldownTime;
+    [SerializeField] GameObject customerPrefab;
+    int randomRange;
+
+    private void Start() {
+        randomRange = Random.Range(-3, 8);
+        InvokeRepeating("SpawnCustomer", 20f, cooldownTime + randomRange);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void SpawnCustomer()
     {
-        
+        randomRange = Random.Range(-3, 8);
+
+        GameObject instance = Instantiate(customerPrefab, transform.position, Quaternion.identity);
+
+        instance.transform.parent = transform;
+        instance.gameObject.SetActive(true);
     }
 }

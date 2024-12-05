@@ -13,14 +13,38 @@ public class BoxData : MonoBehaviour{
     [SerializeField] private Image image;
     [SerializeField] private TextMeshProUGUI text;
 
-    private void Update() {
+    private void Start() {
         if(itemName != null && itemSprite != null){
            UpdateUI();
         }
     }
 
-    private void UpdateUI() {
+    private void Update() 
+    {
+        
+    }
+
+    private void UpdateUI() 
+    {
         image.sprite = itemSprite;
-        text.text = itemName;
+        ChangeText(itemName);
+    }
+
+    public void CantPutThere(string text)
+    {
+        ChangeText(text);
+        StartCoroutine(ChangeTextBack());
+    }
+
+    private void ChangeText(string newText)
+    {
+        text.text = newText;
+    }
+
+    IEnumerator ChangeTextBack()
+    {
+        yield return new WaitForSecondsRealtime(1.5f);
+
+        UpdateUI();
     }
 }
