@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: pixilart-drawing (8)_0
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 727984034, guid: 7e2ea3aa7d6cbb84693201713613a3e0, type: 3}
+  m_Sprite: {fileID: 1471018213, guid: c2de3b8fc062bb548ab59a6aefa96611, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1

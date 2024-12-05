@@ -13,7 +13,7 @@ public class Event : MonoBehaviour
     void Update()
     {
         if(Input.GetMouseButton(0)){
-
+            
         }
     }
 }

@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: f8a7659ba5f28124e969bdec5f5322a7
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - egg_S: {fileID: 21300000, guid: cefdebb7aeab7154ea5485d85e90e58b, type: 3}
+  - bottled_Water_S: {fileID: 21300000, guid: 5b2b49fe1880f6b40b70eb417cb22497, type: 3}
+  - bread_S: {fileID: 21300000, guid: e58f1292c497d1e418c8d6465d64f95d, type: 3}
+  - rice_S: {fileID: 21300000, guid: c37bf5034193ae44398af8e1ef1003d8, type: 3}
+  - snacks_S: {fileID: 21300000, guid: 0970521cbda9c8146b1d611a9875210f, type: 3}
+  - instant_Noodles_S: {fileID: 21300000, guid: 1eac2544ffc80c948bb1dfe062cf41d8, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
