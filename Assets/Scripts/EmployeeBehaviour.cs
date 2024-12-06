@@ -62,11 +62,12 @@ public class EmployeeBehaviour : MonoBehaviour
     };
 
     private void Start(){
-        arrowSelect.SetActive(false);
-        state = State.Idle;
+        collider2d = GetComponent<BoxCollider2D>();
         seeker = GetComponent<Seeker>();
-        target.transform.parent = null;
 
+        state = State.Idle;
+        arrowSelect.SetActive(false);
+        target.transform.parent = null;
         emptyHanded = true;
     }
 
@@ -203,6 +204,7 @@ public class EmployeeBehaviour : MonoBehaviour
             if(tilemap[i].GetTile(targetPosInt) != null){
                 tileName = tilemap[i].name;
                 SetTarget(tileName);
+                break;
             }
         }
 
@@ -327,11 +329,20 @@ public class EmployeeBehaviour : MonoBehaviour
                 break;
 
             case "Cashier":
-                // if(emptyHanded){
-                //     Stock stockScript = currentLocation.GetComponent<Stock>();
+                if(emptyHanded){
+                    EmployeeCashier employeeCashier = currentLocation.GetComponent<EmployeeCashier>();
+                    
+                    if(employeeCashier.transactionFinished){
+                        StartCoroutine(WaitTransaction(3f));
+                        Debug.Log("Hrsnya idle");
+                        break;
+                    } else {
+                        employeeCashier.AddEmployee(gameObject);
+                    }   
 
-                //     stockScript.AddItem(box);
-                // }
+                } else {
+                    Debug.Log("You can't do cashier with full hands");
+                }
                 
                 break;
         }
@@ -346,5 +357,14 @@ public class EmployeeBehaviour : MonoBehaviour
         emptyHanded = true;
         destroyBox = true;
         stillDoingTask = false;
+    }
+    
+    IEnumerator WaitTransaction(float cooldownTime)
+    {
+        Debug.Log("kaching");
+
+        yield return new WaitForSecondsRealtime(cooldownTime);
+
+        ChangeState(State.Idle);
     }
 }

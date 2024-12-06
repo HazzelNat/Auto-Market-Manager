@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Transactions;
 using JetBrains.Annotations;
 using Pathfinding;
 using UnityEditor.Tilemaps;
@@ -23,7 +24,9 @@ public class CustomerBehaviour : MonoBehaviour
     [SerializeField] private GameObject madEmoji;
 
     [Header("Checks")]
+    private bool alreadyDetermined;
     public bool firstTime;
+    public bool transactionFinished;
     public Tilemap[] tilemap;
     private int randomBehaviour;
     private int randomItem;
@@ -55,9 +58,9 @@ public class CustomerBehaviour : MonoBehaviour
 
     Dictionary<string, float> itemCostCashier = new Dictionary<string, float>()
     {
-        {"Snacks", 3.5f},
-        {"Beverage", 2.5f},
-        {"Ice Cream", 2f}
+        {"Snacks", 4f},
+        {"Beverage", 3f},
+        {"Ice Cream", 2.5f}
     };
 
     [Header("Pathfinding and Moving")]
@@ -88,48 +91,56 @@ public class CustomerBehaviour : MonoBehaviour
             case State.Thinking:
                 if(firstTime){
                     randomBehaviour = 0;
-                } else {
+                } else if (!firstTime && !alreadyDetermined){
                     randomBehaviour = Random.Range(0, 2);
                 }
                 
-                switch (randomBehaviour){
-                    case 0:                 // Search item
-                        randomItem = Random.Range(0, 10);
+                if(!alreadyDetermined){
+                    switch (randomBehaviour){
+                        case 0:                 // Search item
+                            randomItem = Random.Range(0, 10);
 
-                        currentTask = customerTargets[randomItem];
+                            currentTask = customerTargets[randomItem];
 
-                        if(currentTask.name == wants){
-                            currentTarget = customerTargets[randomItem].transform.position;
+                            if(currentTask.name == wants){
+                                currentTarget = customerTargets[randomItem].transform.position;
+                                StartCoroutine(Thinking(currentTask));
+                                seeker.StartPath(transform.position, currentTarget, OnCompletePath);
+                                alreadyDetermined = true;
+                            }
+
+                            
+                            // ChangeState(State.Moving);
+                            
+                            break;
+
+                        case 1:                 // Checkout
+                            if(totalCost == 0){
+                                ChangeState(State.Leaving);
+                                break;
+                            }
+
+                            randomCashier = Random.Range(0, 2);
+                            currentTarget = customerCashiers[randomCashier].transform.position;
+                            currentTask = customerCashiers[randomCashier];
+
+                            // ChangeState(State.Moving);
                             StartCoroutine(Thinking(currentTask));
                             seeker.StartPath(transform.position, currentTarget, OnCompletePath);
-                        }
+                            alreadyDetermined = true;
 
-                        
-                        // ChangeState(State.Moving);
-                        
-                        break;
-
-                    case 1:                 // Checkout
-                        if(totalCost == 0){
-                            ChangeState(State.Leaving);
                             break;
-                        }
+                    }
 
-                        randomCashier = Random.Range(0, 2);
-                        currentTarget = customerCashiers[randomCashier].transform.position;
-                        currentTask = customerCashiers[randomCashier];
-
-                        // ChangeState(State.Moving);
-                        StartCoroutine(Thinking(currentTask));
-                        seeker.StartPath(transform.position, currentTarget, OnCompletePath);
-
-                        break;
+                    break;
                 }
 
                 break;
+                
 
             case State.Moving:
-                
+                alreadyDetermined = false;
+
                 if(path == null){
                     ChangeState(State.Thinking);
                     return;
@@ -156,6 +167,7 @@ public class CustomerBehaviour : MonoBehaviour
                 
                 if(reachTarget){
                     firstTime = false;
+
                     if(isLeaving){
                         Destroy(gameObject);
                     }
@@ -216,9 +228,18 @@ public class CustomerBehaviour : MonoBehaviour
                 break;
 
             case "Cashier":
-                moneyManager.ProfitMoney(totalCost);
+                CustomerCashier customerCashier = currentTask.GetComponent<CustomerCashier>();
 
-                ChangeState(State.Leaving);
+                if (customerCashier.transactionFinished) {
+                    customerCashier.RemoveCustomer();
+                    ChangeState(State.Leaving);
+                } else {
+                    if (customerCashier.customer == null) {
+                        customerCashier.AddCustomer(gameObject);
+                    }
+                }
+
+                Debug.Log(state);
 
                 break;
         }
@@ -240,7 +261,7 @@ public class CustomerBehaviour : MonoBehaviour
                 break;
                     
             default:
-                break;        
+                break;
         }
     }
 

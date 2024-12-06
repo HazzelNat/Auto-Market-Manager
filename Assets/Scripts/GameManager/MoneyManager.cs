@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class MoneyManager : MonoBehaviour
 {
-    private float money = 1000;
+    [SerializeField] private float money = 100;
     [SerializeField] private TextMeshProUGUI moneyText;
 
     private void Start() {
